@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body {
@@ -14,7 +15,8 @@ label {
 }
 
 input {
-  /* display: block; */
+  font-size: 1em;
+  padding: 0.25em;
 }
 
 button {
@@ -33,7 +35,7 @@ footer {
 }
 
 .wall-box {
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 1em 0;
 }
 
@@ -42,7 +44,9 @@ footer {
 }
 
 .top-hangers {
-  /* display: flex; */
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hanging-thing, .spacing-thing {
@@ -65,15 +69,19 @@ footer {
 .bottom-thing  {
   text-align: right;
 }
+
+.bottom-side-thing,
+.bottom-center-thing {
+  padding: 0.5em 0.5em 0 0;
+  border-right: 1px dashed;
+  border-bottom: 1px solid;
+}
+
 .bottom-side-thing {
-  border-right: 1px dashed red;
-  border-bottom: 1px solid red;
-  padding-right: 0.5em;
+  border-color: red;
   color: red;
 }
 .bottom-center-thing {
-  border-right: 1px dashed blue;
-  border-bottom: 1px solid blue;
-  padding-right: 0.5em;
+  border-color: blue;
   color: blue;
 }

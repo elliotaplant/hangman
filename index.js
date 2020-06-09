@@ -1,40 +1,37 @@
-function hangman(widthOfWall, widthOfThing, numberOfThings = 1) {
-  const spacing = (widthOfWall - (widthOfThing * numberOfThings)) / (numberOfThings + 1);
-  return {
-    edgeToEdge: spacing,
-    edgeToCenter: spacing + widthOfThing / 2,
-  };
+function toDecimalPlaces(number, places) {
+  return Math.floor(Number(number) * (10 ** places)) / (10 ** places);
+}
+
+function toPct(thing, total, places) {
+  return toDecimalPlaces((thing / total) * 99.9, places);
+}
+
+function div(cls, width, content) {
+  return `<div class="${cls}" style="width: ${width}%">${content}</div>`;
 }
 
 function makeWallContents(wallWidth, thingWidth, count) {
-  const { edgeToEdge, edgeToCenter } = hangman(wallWidth, thingWidth, count);
-  const thingWidthPct = Number(thingWidth / wallWidth * 100).toFixed(2);
-  const edgeToEdgePct = Number(edgeToEdge / wallWidth * 100).toFixed(2);
-  const thingString = `<div class="hanging-thing" style="width: ${thingWidthPct}%">${thingWidth.toFixed(2)}</div>`;
-  const spacingString = `<div class="spacing-thing" style="width: ${edgeToEdgePct}%">${edgeToEdge.toFixed(2)}</div>`;
+  const edgeToEdge = (wallWidth - (thingWidth * count)) / (count + 1);
+  const thingWidthPct = toPct(thingWidth, wallWidth, 2);
+  const edgeToEdgePct = toPct(edgeToEdge, wallWidth, 2);
+  const thingString = div('hanging-thing', thingWidthPct, toDecimalPlaces(thingWidth, 3));
+  const spacingString = div('spacing-thing', edgeToEdgePct, toDecimalPlaces(edgeToEdge, 3));
   const topHangers = Array.from(Array(count + 1)).map(() => spacingString).join(thingString);
   const bottomHangers = Array.from(Array(count)).map((_, i) => {
     const toEdge = i * (edgeToEdge + thingWidth) + edgeToEdge;
     const toCenter = i * (edgeToEdge + thingWidth) + edgeToEdge + thingWidth / 2;
-    const toEdgePct = Number(toEdge / wallWidth * 100).toFixed(2);
-    const toCenterPct = Number(toCenter / wallWidth * 100).toFixed(2);
+    const toEdgePct = toDecimalPlaces(toEdge / wallWidth * 100, 2);
+    const toCenterPct = toDecimalPlaces(toCenter / wallWidth * 100, 2);
     return `
     <div class="bottom-thing">
-      <div class="bottom-side-thing" style="width: ${toEdgePct}%">${toEdge.toFixed(2)}</div>
+      <div class="bottom-side-thing" style="width: ${toEdgePct}%">${toDecimalPlaces(toEdge, 3)}</div>
     </div>
     <div class="bottom-thing">
-      <div class="bottom-center-thing" style="width: ${toCenterPct}%">${toCenter.toFixed(2)}</div>
+      <div class="bottom-center-thing" style="width: ${toCenterPct}%">${toDecimalPlaces(toCenter, 3)}</div>
     </div>
   `;
   }).join('\n');
-  return `
-    <div class="top-hangers">
-      ${topHangers}
-    </div>
-    <div>
-      ${bottomHangers}
-    </div>
-   `;
+  return `<div class="top-hangers">${topHangers}</div>` + bottomHangers;
 }
 
 window.updateHangman = function() {
