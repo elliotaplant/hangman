@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Hangman</title>
-    <link rel="stylesheet" href="index.css">
-  </head>
-  <body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hangman</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="inputs">
+    <h1>Hangman</h1>
     <label>
-      Total Wall Width: <input id="wallWidthInput" type="number" value="10" placeholder="10">
+      <div>Total Wall Width:</div>
+      <input id="wallWidthInput" type="number" value="10" placeholder="10">
     </label>
     <label>
-      Width of Thing to Hang: <input id="thingWidthInput" type="number" value="3" placeholder="3">
+      <div>Width of Thing to Hang:</div>
+      <input id="thingWidthInput" type="number" value="3" placeholder="3">
     </label>
     <label>
-      Number of things to hang: <input id="countInput" type="number" value="1">
+      <div>Number of things to hang:</div>
+      <input id="countInput" type="number" value="2">
     </label>
     <button type="button" onclick="updateHangman()">Update</button>
+  </div>
+  <div id="hangmanArea"></div>
+  <footer>Made with ❤️ by <a href="https://www.elliotplant.com">Elliot Plant</a></footer>
+  <script src="index.js"></script>
+</body>
 
-    <div id="hangmanArea"></div>
-
-    <script src="index.js"></script>
-  </body>
 </html>

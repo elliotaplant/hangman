@@ -1,16 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: monospace;
+  font-size: 20px;
+  padding: 1em;
+}
+
 label {
   display: block;
   margin-bottom: 1em;
 }
 
+input {
+  /* display: block; */
+}
+
+button {
+  padding: 1em 3em;
+  font-size: 20px;
+}
+
+footer {
+  margin-top: 3em;
+  text-align: right;
+}
+
+.inputs {
+  text-align: center;
+  margin-bottom: 3em;
+}
+
 .wall-box {
   border: 1px solid black;
   padding: 1em 0;
-  display: flex;
+}
+
+.wall-width {
+  text-align: center;
+}
+
+.top-hangers {
+  /* display: flex; */
 }
 
 .hanging-thing, .spacing-thing {
   text-align: center;
+  display: inline-block;
 }
 
 .hanging-thing {
@@ -23,4 +60,20 @@ label {
   border-bottom: 1px solid red;
   color: red;
   height: 50%;
+}
+
+.bottom-thing  {
+  text-align: right;
+}
+.bottom-side-thing {
+  border-right: 1px dashed red;
+  border-bottom: 1px solid red;
+  padding-right: 0.5em;
+  color: red;
+}
+.bottom-center-thing {
+  border-right: 1px dashed blue;
+  border-bottom: 1px solid blue;
+  padding-right: 0.5em;
+  color: blue;
 }
