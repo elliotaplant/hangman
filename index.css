@@ -1,0 +1,26 @@
+label {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.wall-box {
+  border: 1px solid black;
+  padding: 1em 0;
+  display: flex;
+}
+
+.hanging-thing, .spacing-thing {
+  text-align: center;
+}
+
+.hanging-thing {
+  border: 1px solid blue;
+  color: blue;
+  padding: 1em;
+}
+
+.spacing-thing {
+  border-bottom: 1px solid red;
+  color: red;
+  height: 50%;
+}
