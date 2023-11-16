@@ -1,32 +1,181 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hangman</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="utf-8">
-  <title>Hangman</title>
-  <link rel="stylesheet" href="index.css">
-</head>
+      body {
+        font-family: monospace;
+        font-size: 20px;
+        padding: 1em;
+      }
 
-<body>
-  <div class="inputs">
-    <h1>Hangman</h1>
-    <label>
-      <div>Total Wall Width:</div>
-      <input id="wallWidthInput" type="number" value="10" placeholder="10">
-    </label>
-    <label>
-      <div>Width of Thing to Hang:</div>
-      <input id="thingWidthInput" type="number" value="3" placeholder="3">
-    </label>
-    <label>
-      <div>Number of things to hang:</div>
-      <input id="countInput" type="number" value="2" step="1">
-    </label>
-    <button type="button" onclick="updateHangman()">Update</button>
-  </div>
-  <div id="hangmanArea"></div>
-  <footer>Made with ❤️ by <a href="https://www.elliotplant.com">Elliot Plant</a></footer>
-  <script src="index.js"></script>
-</body>
+      label {
+        display: block;
+        margin-bottom: 1em;
+      }
 
+      input {
+        font-size: 1em;
+        padding: 0.25em;
+      }
+
+      button {
+        padding: 1em 3em;
+        font-size: 20px;
+      }
+
+      footer {
+        margin-top: 3em;
+        text-align: right;
+      }
+
+      .inputs {
+        text-align: center;
+        margin-bottom: 3em;
+      }
+
+      .wall-box {
+        border: 2px solid black;
+        padding: 1em 0;
+      }
+
+      .wall-width {
+        text-align: center;
+      }
+
+      .top-hangers {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hanging-thing,
+      .spacing-thing {
+        text-align: center;
+        display: inline-block;
+      }
+
+      .hanging-thing {
+        border: 1px solid blue;
+        color: blue;
+        padding: 1em;
+      }
+
+      .spacing-thing {
+        border-bottom: 1px solid red;
+        color: red;
+        height: 50%;
+      }
+
+      .bottom-thing {
+        text-align: right;
+      }
+
+      .bottom-side-thing,
+      .bottom-center-thing {
+        padding: 0.5em 0.5em 0 0;
+        border-right: 1px dashed;
+        border-bottom: 1px solid;
+      }
+
+      .bottom-side-thing {
+        border-color: red;
+        color: red;
+      }
+      .bottom-center-thing {
+        border-color: blue;
+        color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="inputs">
+      <h1>Hangman</h1>
+      <label>
+        <div>Total Wall Width:</div>
+        <input id="wallWidthInput" type="number" value="10" placeholder="10" />
+      </label>
+      <label>
+        <div>Width of Thing to Hang:</div>
+        <input id="thingWidthInput" type="number" value="3" placeholder="3" />
+      </label>
+      <label>
+        <div>Number of things to hang:</div>
+        <input id="countInput" type="number" value="2" step="1" />
+      </label>
+      <button type="button" onclick="updateHangman()">Update</button>
+    </div>
+    <div id="hangmanArea"></div>
+    <footer>Made with ❤️ by <a href="https://www.elliotplant.com">Elliot Plant</a></footer>
+
+    <script>
+      function toDecimalPlaces(number, places) {
+        return Math.floor(Number(number) * 10 ** places) / 10 ** places;
+      }
+
+      function toPct(thing, total, places) {
+        return toDecimalPlaces((thing / total) * 99.9, places);
+      }
+
+      function div(cls, width, content) {
+        return `<div class="${cls}" style="width: ${width}%">${content}</div>`;
+      }
+
+      function makeWallContents(wallWidth, thingWidth, count) {
+        const edgeToEdge = (wallWidth - thingWidth * count) / (count + 1);
+        const thingWidthPct = toPct(thingWidth, wallWidth, 2);
+        const edgeToEdgePct = toPct(edgeToEdge, wallWidth, 2);
+        const thingString = div('hanging-thing', thingWidthPct, toDecimalPlaces(thingWidth, 3));
+        const spacingString = div('spacing-thing', edgeToEdgePct, toDecimalPlaces(edgeToEdge, 3));
+        const topHangers = Array.from(Array(count + 1))
+          .map(() => spacingString)
+          .join(thingString);
+        const bottomHangers = Array.from(Array(count))
+          .map((_, i) => {
+            const toEdge = i * (edgeToEdge + thingWidth) + edgeToEdge;
+            const toCenter = i * (edgeToEdge + thingWidth) + edgeToEdge + thingWidth / 2;
+            const toEdgePct = toDecimalPlaces((toEdge / wallWidth) * 100, 2);
+            const toCenterPct = toDecimalPlaces((toCenter / wallWidth) * 100, 2);
+            return `
+    <div class="bottom-thing">
+      <div class="bottom-side-thing" style="width: ${toEdgePct}%">${toDecimalPlaces(
+              toEdge,
+              3
+            )}</div>
+    </div>
+    <div class="bottom-thing">
+      <div class="bottom-center-thing" style="width: ${toCenterPct}%">${toDecimalPlaces(
+              toCenter,
+              3
+            )}</div>
+    </div>
+  `;
+          })
+          .join('\n');
+        return `<div class="top-hangers">${topHangers}</div>` + bottomHangers;
+      }
+
+      window.updateHangman = function () {
+        const wallWidth = Number(window.wallWidthInput.value);
+        const thingWidth = Number(window.thingWidthInput.value);
+        const count = Number(window.countInput.value);
+
+        const wallContents = makeWallContents(wallWidth, thingWidth, count);
+        window.hangmanArea.innerHTML = `
+    <div class="wall-width">${wallWidth}</div>
+    <div class="wall-box">
+      ${wallContents}
+    </div>
+  `;
+      };
+
+      window.updateHangman();
+    </script>
+  </body>
 </html>
