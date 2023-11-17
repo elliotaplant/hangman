@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <title>Hangman</title>
     <style>
@@ -20,8 +21,8 @@
       }
 
       input {
-        font-size: 1em;
-        padding: 0.25em;
+        font-size: 1.2em;
+        padding: 0.5em;
       }
 
       button {
@@ -112,6 +113,71 @@
       <button type="button" onclick="updateHangman()">Update</button>
     </div>
     <div id="hangmanArea"></div>
+    <br />
+    <hr />
+    <section id="instructions">
+      <h2>How to use Hangman</h2>
+      <p>
+        This tool is designed to help you perfectly hang paintings, frames, or any wall decorations
+        you want evenly spaced.
+      </p>
+
+      <ol>
+        <li>
+          <strong>Measure Your Wall</strong>: Begin by measuring the total width of the wall where
+          you plan to hang your items. It doesn't matter what units you use, as long as you're
+          consistent
+        </li>
+        <li>
+          <strong>Input Wall Width</strong>: Enter the total width of your wall in the 'Total Wall
+          Width' field.
+        </li>
+        <li>
+          <strong>Measure Your Items</strong>: Measure the width of each item you want to hang. Note
+          that this requires all of your items to be the same width. Sorry.
+        </li>
+        <li>
+          <strong>Input Item Width</strong>: Enter the width of your item(s) in the 'Width of Thing
+          to Hang' field. Use the same units as you used to measure the wall.
+        </li>
+        <li>
+          <strong>Decide on Quantity</strong>: Determine how many items you want to hang on the
+          wall.
+        </li>
+        <li>
+          <strong>Input Quantity</strong>: Enter the number of items you plan to hang in the 'Number
+          of things to hang' field.
+        </li>
+        <li>
+          <strong>Update and View</strong>: Click the 'Update' button to generate a visual
+          representation and measurements. This will show the spacing between each item and the
+          distance from the wall edges to each item's edge and center.
+        </li>
+        <li>
+          <strong>Read the Output</strong>: The tool will display the measurements in both
+          percentages and decimal figures for precision. Use these measurements to mark your wall
+          accordingly.
+        </li>
+        <li>
+          <strong>Hang Your Items</strong>: Using the provided measurements, mark your wall and hang
+          your items for a balanced and aesthetically pleasing display.
+        </li>
+      </ol>
+
+      <div>
+        <h3>Tips for Perfect Hanging:</h3>
+        <ul>
+          <li>Always double-check your measurements.</li>
+          <li>Use a level tool to ensure your items are hung straight.</li>
+          <li>
+            Consider the height at which you hang your items. Eye level is usually a good standard.
+          </li>
+        </ul>
+      </div>
+
+      <p>Happy Hanging!</p>
+    </section>
+
     <footer>Made with ❤️ by <a href="https://www.elliotplant.com">Elliot Plant</a></footer>
 
     <script>
